@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    
+</head>
+<body>
+    <h1>Rock Paper Scissors Game</h1>
+    <p>Choose your move:</p>
+    <div class="buttons">
+        <button id="rock">&#x1F44A;</button>
+        <button id="paper">&#x1f590;</button>
+        <button id="scissors">&#x270c;</button>
+    </div>
+    <p id="result"></p>
+    <p id="scores">
+        Your score: <span id="user-score">0</span>
+        Computer score: <span id="computer-score">0</span>
+    </p>
+</body>
+<script>
+    const buttons = document.querySelectorAll("button");
+    
+    const resultEl = document.getElementById("result");
+    
+    const playerScoreEl = document.getElementById("user-score");
+    
+    const computerScoreEl = document.getElementById("computer-score");
+    
+    let playerScore = 0;
+    let computerScore = 0;
+    
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const result = playRound(button.id, computerPlay());
+        resultEl.textContent = result;
+        
+      });
+    });
+    
+    function computerPlay() {
+      const choices = ["rock", "paper", "scissors"];
+      const randomChoice = Math.floor(Math.random() * choices.length);
+      return choices[randomChoice];
+    }
+    
+    function playRound(playerSelection, computerSelection) {
+      if (playerSelection === computerSelection) {
+        return "It's a tie!";
+      } else if (
+        (playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "paper" && computerSelection === "rock") ||
+        (playerSelection === "scissors" && computerSelection === "paper")
+      ) {
+        playerScore++;
+        playerScoreEl.textContent = playerScore;
+        return "You win! " + playerSelection + " beats " + computerSelection;
+      } else {
+        computerScore++;
+        computerScoreEl.textContent = computerScore;
+        return "You lose! " + computerSelection + " beats " + playerSelection;
+      }
+    }
+    </script>
+</html>
+
+

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        * {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #outerbody {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 700px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        h2 {
+            color: #c5802b;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        span {
+            color: #555;
+            font-size: 20px;
+        }
+
+        button {
+            height: 150px;
+            width: 150px;
+            background-color: #dbeafe;
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #bfdbfe;
+            transform: scale(1.05);
+        }
+
+        .image {
+            width: 100px;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        #displayresult {
+            display: block;
+            font-size: 22px;
+            font-weight: bold;
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        #userscore {
+            color: green;
+            margin-left: 5px;
+        }
+
+        #comscore {
+            color: red;
+            margin-left: 5px;
+        }
+
+        #draws {
+            color: goldenrod;
+            margin-left: 5px;
+        }
+
+        div>span {
+            display: inline-block;
+            margin: 5px 10px;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                height: 120px;
+                width: 120px;
+            }
+
+            .image {
+                width: 80px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="outerbody">
+        <h2>Welcome to the Rock, Paper & Scissor Game</h2>
+        
+
+        <div class="choices">
+            <button id="rock"><img class="image" src="rock-removebg-preview.png" alt="rock"></button>
+            <button id="paper"><img class="image" src="paper-removebg-preview.png" alt="paper"></button>
+            <button id="scissor"><img class="image" src="scissor-removebg-preview (1).png" alt="scissor"></button>
+        </div>
+        <span><b>Make your choice:<span id="user"></span></b></span><br>
+        <span><b>Computer's choice:<span id="com"></span></b></span>
+        <span id="displayresult"></span>
+        <div>
+            <span><b>Your Score:<span id="userscore">0</span></b></span>
+            <span><b>Computer's Score:<span id="comscore">0</span></b></span>
+            <span><b>Draws:<span id="draws">0</span></b></span>
+        </div>
+    </div>
+</body>
+<script>
+    let userscore = 0;
+    let comscore = 0;
+    let draws = 0;
+
+    function computerchoice() {
+        let choice = ['rock', 'paper', 'scissor']
+        let comchoice = Math.floor(Math.random() * choice.length);
+        return choice[comchoice];
+    }
+
+    function playround(playerchoice) {
+        let comchoice = computerchoice();
+        game(comchoice, playerchoice);
+    }
+
+    let rock = document.getElementById("rock").addEventListener("click", function () {
+        playround("rock");
+    });
+    let paper = document.getElementById("paper").addEventListener("click", function () {
+        playround("paper");
+    });
+    let scissor = document.getElementById("scissor").addEventListener("click", function () {
+        playround("scissor");
+    });
+
+
+    function game(comchoice, playerchoice) {
+        if (comchoice == playerchoice) {
+            document.getElementById("displayresult").innerHTML = 'GameDraw'
+            draws++;
+        }
+        else if (
+            comchoice === 'rock' && playerchoice === 'paper' ||
+            comchoice === 'paper' && playerchoice === 'scissor' ||
+            comchoice === 'scissor' && playerchoice === 'rock') {
+            document.getElementById("displayresult").innerHTML = 'Winner'
+            userscore++;
+        }
+        else {
+            document.getElementById("displayresult").innerHTML = 'Looser'
+            comscore++;
+        }
+        document.getElementById("userscore").innerText = userscore;
+        document.getElementById("comscore").innerText = comscore;
+        document.getElementById("draws").innerText = draws;
+    }
+
+</script>
+
+</html>
